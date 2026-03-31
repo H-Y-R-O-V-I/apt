@@ -1,0 +1,8 @@
+Origin: Hyrovi
+Label: Hyrovi APT
+Suite: stable
+Codename: hyrovi
+Architectures: arm64 amd64
+Components: main
+Description: Hyrovi personal APT repository
+SignWith: 2952AE91922C5116

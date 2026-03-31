@@ -1,0 +1,6 @@
+Archive: stable
+Component: main
+Origin: Hyrovi
+Label: Hyrovi APT
+Architecture: amd64
+Description: Hyrovi personal APT repository
