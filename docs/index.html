@@ -1,0 +1,24 @@
+<!doctype html>
+<html lang="de">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Hyrovi APT Repo</title>
+</head>
+<body>
+  <h1>Hyrovi APT Repo</h1>
+  <p>Aktuelles Paket: <strong>hyrovi-tool 0.1.1</strong></p>
+  <p>Installieren:</p>
+  <pre>sudo install -d -m 0755 /etc/apt/keyrings && \
+curl -fsSL -o /tmp/hyrovi-archive-keyring.gpg https://H-Y-R-O-V-I.github.io/apt/hyrovi-archive-keyring.gpg && \
+sudo install -m 0644 /tmp/hyrovi-archive-keyring.gpg /etc/apt/keyrings/hyrovi-archive-keyring.gpg && \
+echo "deb [signed-by=/etc/apt/keyrings/hyrovi-archive-keyring.gpg] https://H-Y-R-O-V-I.github.io/apt/ hyrovi main" | sudo tee /etc/apt/sources.list.d/hyrovi.list && \
+sudo apt update && sudo apt install hyrovi-tool</pre>
+  <p>Wichtige Dateien:</p>
+  <ul>
+    <li><a href="./hyrovi-archive-keyring.gpg">hyrovi-archive-keyring.gpg</a></li>
+    <li><a href="./hyrovi-archive-key.asc">hyrovi-archive-key.asc</a></li>
+    <li><a href="./dists/hyrovi/InRelease">dists/hyrovi/InRelease</a></li>
+  </ul>
+</body>
+</html>

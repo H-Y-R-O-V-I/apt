@@ -1,0 +1,9 @@
+Package: hyrovi-tool
+Version: 0.1.1
+Section: utils
+Priority: optional
+Architecture: all
+Maintainer: Leo <deine-mail@example.com>
+Depends: bash
+Description: Minimales Hyrovi CLI Tool
+ Ein kleines Beispiel-Tool fuer Installation per APT.

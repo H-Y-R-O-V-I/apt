@@ -1,15 +1,15 @@
 Package: hyrovi-tool
-Version: 0.1.0
+Version: 0.1.1
 Architecture: all
 Maintainer: Leo <deine-mail@example.com>
 Depends: bash
 Priority: optional
 Section: utils
-Filename: pool/main/h/hyrovi-tool/hyrovi-tool_0.1.0_all.deb
-Size: 888
-SHA256: e72bcb1e84db6eef140798dda63f534ee3fd1966706d6674dd16aa1a3acbfb7a
-SHA1: 82ac0509537991b4e2048a347b0187dba0144b8c
-MD5sum: 7d41b8012772747262a12b9de15f58aa
+Filename: pool/main/h/hyrovi-tool/hyrovi-tool_0.1.1_all.deb
+Size: 892
+SHA256: 136453dbb58ca1e111df6abcb53505a71d74c87e39f2ff48ea097c031004f4b1
+SHA1: 42c77a11dd5f770fe9becf38e80360e68579b5a9
+MD5sum: 0697830968bbcae4b806ff0baefc58c7
 Description: Minimales Hyrovi CLI Tool
  Ein kleines Beispiel-Tool fuer Installation per APT.
 
