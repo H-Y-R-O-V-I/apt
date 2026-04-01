@@ -5,44 +5,44 @@ Origin: Hyrovi
 Label: Hyrovi APT
 Suite: stable
 Codename: hyrovi
-Date: Wed, 01 Apr 2026 10:19:09 UTC
+Date: Wed, 01 Apr 2026 10:22:44 UTC
 Architectures: arm64 amd64
 Components: main
 Description: Hyrovi personal APT repository
 MD5Sum:
- df8f3acf7078d2100e4b936e26ad3248 472 main/binary-arm64/Packages
- c4c70d51bf315963d3352f568be83c69 366 main/binary-arm64/Packages.gz
+ 87dd1063ec96aff32cd05c193142e076 472 main/binary-arm64/Packages
+ 63813e7ba568d48f54d611909d3753ab 364 main/binary-arm64/Packages.gz
  a9541bc2636b986799f2a97cb43dc6d7 129 main/binary-arm64/Release
- df8f3acf7078d2100e4b936e26ad3248 472 main/binary-amd64/Packages
- c4c70d51bf315963d3352f568be83c69 366 main/binary-amd64/Packages.gz
+ 87dd1063ec96aff32cd05c193142e076 472 main/binary-amd64/Packages
+ 63813e7ba568d48f54d611909d3753ab 364 main/binary-amd64/Packages.gz
  40c9920058ca30c45ef2709ed5340250 129 main/binary-amd64/Release
 SHA1:
- bef551e842699b7aa11bcc06e2dc6629571adb19 472 main/binary-arm64/Packages
- ba4275885b53980231ea5e816a253e52441d0db3 366 main/binary-arm64/Packages.gz
+ e7e96c207174439c4c6c2f4008ccefae329e2365 472 main/binary-arm64/Packages
+ 14452ac112f08d5ca0a97e78be44adbc68254ae2 364 main/binary-arm64/Packages.gz
  06d13cd9c4ea4ebdeb8e31937051870c0b79b569 129 main/binary-arm64/Release
- bef551e842699b7aa11bcc06e2dc6629571adb19 472 main/binary-amd64/Packages
- ba4275885b53980231ea5e816a253e52441d0db3 366 main/binary-amd64/Packages.gz
+ e7e96c207174439c4c6c2f4008ccefae329e2365 472 main/binary-amd64/Packages
+ 14452ac112f08d5ca0a97e78be44adbc68254ae2 364 main/binary-amd64/Packages.gz
  f83273a2abb09bf8dea8f35950cc262fc3e119ed 129 main/binary-amd64/Release
 SHA256:
- eb8bf4b1f3ef4d82c4f69411eef172b7cad959df196bdad63a3878b7f93d94b6 472 main/binary-arm64/Packages
- afc63eab7eec8ce4dede5abbc7b301d98affea7b248ab05f7943260358069b25 366 main/binary-arm64/Packages.gz
+ 9a1766bd9dbd54e1202faaccc730ec4562e9c55fb7cd434a65f3acc9701b15c1 472 main/binary-arm64/Packages
+ 01b8fad8118c5b166ce0e3a9f33c15473df7be7d68aa6483759dbc2cc7b9783f 364 main/binary-arm64/Packages.gz
  a1200525fe9038ec9a479105c3f04ff1f3647b5a60c1454c59df7503bd4f9c1d 129 main/binary-arm64/Release
- eb8bf4b1f3ef4d82c4f69411eef172b7cad959df196bdad63a3878b7f93d94b6 472 main/binary-amd64/Packages
- afc63eab7eec8ce4dede5abbc7b301d98affea7b248ab05f7943260358069b25 366 main/binary-amd64/Packages.gz
+ 9a1766bd9dbd54e1202faaccc730ec4562e9c55fb7cd434a65f3acc9701b15c1 472 main/binary-amd64/Packages
+ 01b8fad8118c5b166ce0e3a9f33c15473df7be7d68aa6483759dbc2cc7b9783f 364 main/binary-amd64/Packages.gz
  98ee69dd0dbb5f5dd3dc03a77fdc965fa55c195cc04116fcfa47b11a176042de 129 main/binary-amd64/Release
 -----BEGIN PGP SIGNATURE-----
 
-iQIzBAEBCgAdFiEETkAjFMTMQT+R+WYtKVKukZIsURYFAmnM8R4ACgkQKVKukZIs
-URbGvxAAmaN53qFqoXhbJbALRMQrCF/mTnqJw5WYv+rlY4befYfGTXJO4gYSyaMr
-Dwa2/eVbFcM7cYUO1Bdt+D+Ye9+OmG/wxZES0Y48fmoNgjrwWH9IwGRuZdE45kuC
-qDkkkeqFkXSUDeEvtwIOxe9c2OQhPpSd6rbW0b0vFGvvfNxH3/cuceUSKdVsp2kx
-0BmIlNQmbYc/V8jkv1Odyv9ZF7Tsq0C7tg5YzZy1VTWc4IifM/QDllbqbyg+78FQ
-RHBaY9CnxCtMBUSebSNs5UhA84Q1xh1ga/sfBsFYH195ozixk6pGxBiWFzeN9eNV
-7tjVXTTePjpMaxXKAMQvwgBXvJsPw9l6UiOKpUGfRZa0zmVZy2Ai0lCrp+6Sj6Qm
-iSd//4UXrOPgPvIGtzSUo9oFSFhQkHMivgp3D1NjecTviBOeUe9xIFrlgOZRL/up
-uikR/q928Uh4rj70FcI+HXhxt/MVmBPXgwsQPjqTpdIT+NQ486vTZKhenRz1W7zw
-kJcaNrvOVH74fMFc2psnIaaL+TC1Tl6wis71U28TJcZVkXnQvssqs0Fck3uvqsVe
-cMkTcvhTZ1JVJnWfBrD3JYeEhBimTTXbGqHsQCFAzTCyyfK7/HJL6peSPyV2CkpP
-h5zvrT/n7tJpOha0rjuVXjrk1JpO/zydJ7UQ4/PM4bcOAH92tIs=
-=SQiG
+iQIzBAEBCgAdFiEETkAjFMTMQT+R+WYtKVKukZIsURYFAmnM8fQACgkQKVKukZIs
+URYdFBAAsOWv3wyCvLrfoYg+5gJvE/b/ItvJHiOazisnwCMjduu+jFb8yHkg2oTY
+qMp4mSHztk4hSckZV40I6Ey7BLwJ9ZQi46F34hGsTkUbDWO5sOnrJlE0f9UBldzp
+FhSJuUnywiNbP1ATXB+XQxKlPOEC9TALktfzAzHZ/O64bVUD1Yg8PTOpYICiGbMW
+LegMTuebSIfvP7yziJCSAsCwP2lbzyi/Okz8mL7/1iwu3mfDCB67iqJseyUJWEdg
+9geB9OgVLgaQH2lMFB4IfwEsfs4OGsWq/dxh1AdLAYC1SegsU1M7ogrk+EJ0eTg/
+EUBnFgKNnAKR+ZNZTz2geWk9nEf7GFUOI9YMaBkukpylKeLeJQ6Z6bo/FvxwDMZu
+fJSgHlXzYltgxVarNQWvfrzSLqNJO/w17e/qXIc55i+BI7RHx73ujCLeUiFFY7N5
+Zf6Sqls1W+5ll2cOE1DJ1nx3yjLMcwsT5Rb2wIUlpX2qvcV4KxWRG5tupKLjU3Px
+kQtIjsEcLTNkhNiV5J1R5sTrtw5xYDSKIgbpDKcr1+EA6f2FPFAmFRMyFFMQSQjw
+Ocuq5JT9bS5aXFuOyBsd33hQwpb86KGpL1WmpvxdaUo2AmswxqJKdYhr6NtBW+kw
+TIJDn7DewengP6MxXDVBmPl7/5oxaOSnhrpKZ/6FHTMcgu4hFao=
+=4Xhp
 -----END PGP SIGNATURE-----

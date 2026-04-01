@@ -1,0 +1,3 @@
+HYROVI_SERVER_URL="https://tool.hyrovi.com"
+HYROVI_OFFLINE_GRACE_DAYS="7"
+HYROVI_TOOL_NAME="hyrovi-tool"

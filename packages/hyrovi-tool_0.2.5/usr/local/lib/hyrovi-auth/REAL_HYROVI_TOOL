@@ -1,6 +1,5 @@
 #!/usr/bin/env bash
 set -Eeuo pipefail
 [ -f /etc/default/hyrovi-tool-auth ] && . /etc/default/hyrovi-tool-auth
-export HYROVI_SERVER_URL HYROVI_OFFLINE_GRACE_DAYS HYROVI_TOOL_NAME HYROVI_TOOL_VERSION HYROVI_DEVICE_NAME
 /usr/local/lib/hyrovi-auth/hyrovi-auth-guard.sh
 exec /usr/local/lib/hyrovi-auth/REAL_HYROVI_TOOL "$@"
