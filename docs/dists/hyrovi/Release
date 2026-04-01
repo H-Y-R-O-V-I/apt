@@ -2,28 +2,28 @@ Origin: Hyrovi
 Label: Hyrovi APT
 Suite: stable
 Codename: hyrovi
-Date: Wed, 01 Apr 2026 08:47:02 UTC
+Date: Wed, 01 Apr 2026 08:51:58 UTC
 Architectures: arm64 amd64
 Components: main
 Description: Hyrovi personal APT repository
 MD5Sum:
- 47adfa4d71598097ad36ea423a481ea9 472 main/binary-arm64/Packages
- 4aca64c2a94938ba1c1343031ad24840 366 main/binary-arm64/Packages.gz
+ 18298171b052b8744f5015b42ee00f7a 472 main/binary-arm64/Packages
+ d39befcbde366f2e662c7e3928992012 365 main/binary-arm64/Packages.gz
  a9541bc2636b986799f2a97cb43dc6d7 129 main/binary-arm64/Release
- 47adfa4d71598097ad36ea423a481ea9 472 main/binary-amd64/Packages
- 4aca64c2a94938ba1c1343031ad24840 366 main/binary-amd64/Packages.gz
+ 18298171b052b8744f5015b42ee00f7a 472 main/binary-amd64/Packages
+ d39befcbde366f2e662c7e3928992012 365 main/binary-amd64/Packages.gz
  40c9920058ca30c45ef2709ed5340250 129 main/binary-amd64/Release
 SHA1:
- 016d170767656def8da32f52b1819b8a1080a988 472 main/binary-arm64/Packages
- 0a0afafef63b75d6def287f30ea17f7850f0ad2a 366 main/binary-arm64/Packages.gz
+ 25af5bb3c47cfe0f6c11b37847c4ca45ce5d8a38 472 main/binary-arm64/Packages
+ 209e6cb308dac8fee4d3ad191acc5d83632a79e4 365 main/binary-arm64/Packages.gz
  06d13cd9c4ea4ebdeb8e31937051870c0b79b569 129 main/binary-arm64/Release
- 016d170767656def8da32f52b1819b8a1080a988 472 main/binary-amd64/Packages
- 0a0afafef63b75d6def287f30ea17f7850f0ad2a 366 main/binary-amd64/Packages.gz
+ 25af5bb3c47cfe0f6c11b37847c4ca45ce5d8a38 472 main/binary-amd64/Packages
+ 209e6cb308dac8fee4d3ad191acc5d83632a79e4 365 main/binary-amd64/Packages.gz
  f83273a2abb09bf8dea8f35950cc262fc3e119ed 129 main/binary-amd64/Release
 SHA256:
- 117613ce902589d7ed5329a1475354fcf9dce3bdc7e10d9a30492b58ecb3c40a 472 main/binary-arm64/Packages
- 9175952ac35ad3f49c8ae54eab5e102d83d31bdb1d001d796d3634e6ef03933b 366 main/binary-arm64/Packages.gz
+ 617379a73968be0c851fcf4f7d1a52039b80180faeb7e69bdc81a3a4027e3c34 472 main/binary-arm64/Packages
+ 3dae7e955a739c25b3a64f27e939f3891afd6c853ab0d539dcb4f6e81ee119c5 365 main/binary-arm64/Packages.gz
  a1200525fe9038ec9a479105c3f04ff1f3647b5a60c1454c59df7503bd4f9c1d 129 main/binary-arm64/Release
- 117613ce902589d7ed5329a1475354fcf9dce3bdc7e10d9a30492b58ecb3c40a 472 main/binary-amd64/Packages
- 9175952ac35ad3f49c8ae54eab5e102d83d31bdb1d001d796d3634e6ef03933b 366 main/binary-amd64/Packages.gz
+ 617379a73968be0c851fcf4f7d1a52039b80180faeb7e69bdc81a3a4027e3c34 472 main/binary-amd64/Packages
+ 3dae7e955a739c25b3a64f27e939f3891afd6c853ab0d539dcb4f6e81ee119c5 365 main/binary-amd64/Packages.gz
  98ee69dd0dbb5f5dd3dc03a77fdc965fa55c195cc04116fcfa47b11a176042de 129 main/binary-amd64/Release

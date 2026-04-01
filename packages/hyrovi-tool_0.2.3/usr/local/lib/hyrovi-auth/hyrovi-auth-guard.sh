@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 set -Eeuo pipefail
 
-CONFIG_DIR="$HOME/.config/hyrovi"
+CONFIG_DIR="/etc/hyrovi"
 DEVICE_FILE="${CONFIG_DIR}/device.json"
 AUTH_FILE="${CONFIG_DIR}/auth.json"
 STATE_FILE="${CONFIG_DIR}/state.json"
