@@ -1,16 +1,19 @@
-# Hyrovi Tool Auth / Device Approval
+# Hyrovi Auth Setup
 
-## Admin-System
-Dieses Projekt setzt einen separaten Admin-Server in `~/programmieren/apt-admin` auf.
+Geräte-API:
+- https://tool.hyrovi.com
+- lokal: http://127.0.0.1:8787
+- health: http://127.0.0.1:8787/healthz
 
-## Client-Seite
-Im APT-Projekt liegen ergänzend:
-- `tools/hyrovi-auth-guard.sh`
-- `tools/install-client-auth-files.sh`
-- `client-hooks/hyrovi-tool-wrapper-template.sh`
+Admin-Dashboard:
+- lokal: http://127.0.0.1:8788/admin
+- health: http://127.0.0.1:8788/healthz
 
-## Verhalten
-- Gerät registriert sich beim Server
-- Gerät muss im Adminpanel freigegeben werden
-- Nur bei explizitem Entzug (`revoked`, `blocked`, `invalid_token`, `unknown_device`) entfernt sich nur `hyrovi-tool`
-- Bei reinem Netzwerkfehler passiert **keine** automatische Deinstallation
+Defaults auf Clients:
+- /etc/default/hyrovi-tool-auth
+
+Wichtig:
+- 8787 ist nur für Geräte/API
+- 8788 ist nur fürs Admin-Dashboard
+- Nach Approve im Admin-Dashboard funktioniert der nächste Start direkt
+- Nur bei explizitem revoked/blocked/unknown_device/invalid_token wird nur hyrovi-tool entfernt

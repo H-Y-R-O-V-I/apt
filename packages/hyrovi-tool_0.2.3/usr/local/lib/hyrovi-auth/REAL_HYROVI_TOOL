@@ -1,53 +1,5 @@
 #!/usr/bin/env bash
-set -euo pipefail
-
-TOOL_NAME="hyrovi-tool"
-TOOL_VERSION="0.2.0"
-
-print_help() {
-  cat <<HELP
-${TOOL_NAME} ${TOOL_VERSION}
-
-Verwendung:
-  ${TOOL_NAME} help
-  ${TOOL_NAME} version
-  ${TOOL_NAME} update
-
-Commands:
-  help       Zeigt diese Hilfe
-  version    Zeigt die aktuelle Version
-  update     Aktualisiert ${TOOL_NAME} ueber APT
-HELP
-}
-
-run_update() {
-  echo "[INFO] Starte Update fuer ${TOOL_NAME} ..."
-  if [[ "${EUID}" -ne 0 ]]; then
-    sudo apt update
-    sudo apt install --only-upgrade -y "${TOOL_NAME}"
-  else
-    apt update
-    apt install --only-upgrade -y "${TOOL_NAME}"
-  fi
-  echo "[OK] Update abgeschlossen."
-}
-
-cmd="${1:-help}"
-
-case "${cmd}" in
-  help|-h|--help)
-    print_help
-    ;;
-  version|-v|--version)
-    echo "${TOOL_NAME} ${TOOL_VERSION}"
-    ;;
-  update)
-    run_update
-    ;;
-  *)
-    echo "[FEHLER] Unbekannter Command: ${cmd}"
-    echo
-    print_help
-    exit 1
-    ;;
-esac
+set -Eeuo pipefail
+[ -f /etc/default/hyrovi-tool-auth ] && . /etc/default/hyrovi-tool-auth
+/usr/local/lib/hyrovi-auth/hyrovi-auth-guard.sh
+exec /usr/local/lib/hyrovi-auth/REAL_HYROVI_TOOL "$@"

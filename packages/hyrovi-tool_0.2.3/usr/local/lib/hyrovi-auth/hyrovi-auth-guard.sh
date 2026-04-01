@@ -1,64 +1,59 @@
 #!/usr/bin/env bash
 set -Eeuo pipefail
 
-CONFIG_DIR="/etc/hyrovi"
+CONFIG_DIR="${XDG_CONFIG_HOME:-$HOME/.config}/hyrovi"
+STATE_DIR="${XDG_STATE_HOME:-$HOME/.local/state}/hyrovi"
 DEVICE_FILE="${CONFIG_DIR}/device.json"
 AUTH_FILE="${CONFIG_DIR}/auth.json"
-STATE_FILE="${CONFIG_DIR}/state.json"
+STATE_FILE="${STATE_DIR}/state.json"
+
 TOOL_NAME="${HYROVI_TOOL_NAME:-hyrovi-tool}"
 TOOL_VERSION="${HYROVI_TOOL_VERSION:-unknown}"
 SERVER_URL="${HYROVI_SERVER_URL:-}"
 OFFLINE_GRACE_DAYS="${HYROVI_OFFLINE_GRACE_DAYS:-7}"
 
-mkdir -p "$CONFIG_DIR"
+mkdir -p "$CONFIG_DIR" "$STATE_DIR"
 
 json_get() {
-  local file="$1"
-  local key="$2"
+  local file="$1" key="$2"
+  [[ -f "$file" ]] || { echo ""; return 0; }
   python3 - "$file" "$key" <<'PY'
 import json, sys
-p=sys.argv[1]; key=sys.argv[2]
 try:
-    with open(p,"r",encoding="utf-8") as f:
-        data=json.load(f)
-    print(data.get(key,""))
+    with open(sys.argv[1]) as f:
+        data = json.load(f)
+    value = data.get(sys.argv[2], "")
+    print("" if value is None else value)
 except Exception:
     print("")
 PY
 }
 
 json_write() {
-  local target="$1"
-  local content="$2"
-  printf '%s\n' "$content" | sudo tee "$target" >/dev/null
-  sudo chmod 600 "$target" || true
+  local file="$1" content="$2"
+  umask 077
+  printf '%s\n' "$content" > "$file"
 }
 
-ensure_device() {
+ensure_device_file() {
   if [[ ! -f "$DEVICE_FILE" ]]; then
-    local device_id fingerprint hostname device_name
+    local device_id hostname device_name fingerprint machine_id
     device_id="$(python3 - <<'PY'
-import uuid; print(uuid.uuid4())
+import uuid
+print(uuid.uuid4())
 PY
 )"
-    fingerprint="$(python3 - <<'PY'
-import hashlib, socket
-from pathlib import Path
-parts = []
-for p in ("/etc/machine-id",):
-    try:
-        parts.append(Path(p).read_text(encoding="utf-8").strip())
-    except Exception:
-        pass
-parts.append(socket.gethostname())
-print(hashlib.sha256("|".join(parts).encode()).hexdigest())
-PY
-)"
-    hostname="$(hostname)"
+    hostname="$(hostname 2>/dev/null || echo unknown-host)"
     device_name="${HYROVI_DEVICE_NAME:-$hostname}"
-    json_write "$DEVICE_FILE" "$(cat <<EOF
+    machine_id="$(cat /etc/machine-id 2>/dev/null || true)"
+    fingerprint="$(python3 - "$machine_id" "$hostname" <<'PY'
+import hashlib, sys
+print(hashlib.sha256((sys.argv[1] + "|" + sys.argv[2]).encode()).hexdigest())
+PY
+)"
+    json_write "$DEVICE_FILE" "$(cat <<EOF2
 {"device_id":"$device_id","hostname":"$hostname","device_name":"$device_name","fingerprint":"$fingerprint"}
-EOF
+EOF2
 )"
   fi
 }
@@ -71,16 +66,69 @@ register_if_needed() {
     fingerprint="$(json_get "$DEVICE_FILE" fingerprint)"
     hostname="$(json_get "$DEVICE_FILE" hostname)"
     device_name="$(json_get "$DEVICE_FILE" device_name)"
-    payload="$(cat <<EOF
+    payload="$(cat <<EOF2
 {"device_id":"$device_id","hostname":"$hostname","device_name":"$device_name","fingerprint":"$fingerprint","tool_version":"$TOOL_VERSION"}
-EOF
+EOF2
 )"
     curl -fsS -X POST "${SERVER_URL%/}/api/register" -H 'Content-Type: application/json' -d "$payload" >/dev/null || true
   fi
 }
 
+write_last_ok() {
+  local now_epoch
+  now_epoch="$(date +%s)"
+  json_write "$STATE_FILE" "{\"last_ok_epoch\":$now_epoch}"
+}
+
+self_remove() {
+  local reason="${1:-revoked}"
+  echo "AUTH_REMOVE:$reason"
+  if command -v sudo >/dev/null 2>&1; then
+    sudo apt remove -y "$TOOL_NAME" || true
+  fi
+}
+
 check_access() {
   [[ -n "$SERVER_URL" ]] || { echo "SERVER_URL fehlt"; return 2; }
+
+  if [[ ! -f "$AUTH_FILE" ]] || [[ -z "$(json_get "$AUTH_FILE" token)" ]]; then
+    register_if_needed
+
+    local bootstrap_code bootstrap_body device_id fingerprint hostname payload tmpf bootstrap_token
+    device_id="$(json_get "$DEVICE_FILE" device_id)"
+    fingerprint="$(json_get "$DEVICE_FILE" fingerprint)"
+    hostname="$(json_get "$DEVICE_FILE" hostname)"
+    payload="$(cat <<EOF2
+{"device_id":"$device_id","hostname":"$hostname","fingerprint":"$fingerprint","tool_version":"$TOOL_VERSION","token":""}
+EOF2
+)"
+    tmpf="$(mktemp)"
+    bootstrap_code="$(curl -sS -o "$tmpf" -w '%{http_code}' -X POST "${SERVER_URL%/}/api/check" -H 'Content-Type: application/json' -d "$payload" || echo "000")"
+    bootstrap_body="$(cat "$tmpf" 2>/dev/null || true)"
+    rm -f "$tmpf"
+
+    if [[ "$bootstrap_code" == "200" ]]; then
+      bootstrap_token="$(python3 - "$bootstrap_body" <<'PY'
+import json, sys
+try:
+    print(json.loads(sys.argv[1]).get("bootstrap_token",""))
+except Exception:
+    print("")
+PY
+)"
+      if [[ -n "$bootstrap_token" ]]; then
+        json_write "$AUTH_FILE" "$(cat <<EOF2
+{"token":"$bootstrap_token"}
+EOF2
+)"
+      fi
+    fi
+
+    if [[ ! -f "$AUTH_FILE" ]] || [[ -z "$(json_get "$AUTH_FILE" token)" ]]; then
+      echo "Gerät ist registriert, aber noch nicht freigegeben."
+      return 1
+    fi
+  fi
 
   local device_id fingerprint hostname token payload response http_code body status allowed now_epoch last_ok_epoch grace_seconds
   device_id="$(json_get "$DEVICE_FILE" device_id)"
@@ -88,9 +136,9 @@ check_access() {
   hostname="$(json_get "$DEVICE_FILE" hostname)"
   token="$(json_get "$AUTH_FILE" token)"
 
-  payload="$(cat <<EOF
+  payload="$(cat <<EOF2
 {"device_id":"$device_id","hostname":"$hostname","fingerprint":"$fingerprint","tool_version":"$TOOL_VERSION","token":"$token"}
-EOF
+EOF2
 )"
 
   response="$(mktemp)"
@@ -104,15 +152,7 @@ EOF
   [[ "$last_ok_epoch" =~ ^[0-9]+$ ]] || last_ok_epoch=0
 
   if [[ "$http_code" == "200" ]]; then
-    status="$(python3 - <<'PY' "$body"
-import json, sys
-try:
-    print(json.loads(sys.argv[1]).get("status",""))
-except Exception:
-    print("")
-PY
-)"
-    allowed="$(python3 - <<'PY' "$body"
+    allowed="$(python3 - "$body" <<'PY'
 import json, sys
 try:
     print(str(json.loads(sys.argv[1]).get("allowed", False)).lower())
@@ -120,14 +160,14 @@ except Exception:
     print("false")
 PY
 )"
-    if [[ "$allowed" == "true" && "$status" == "approved" ]]; then
-      json_write "$STATE_FILE" "{\"last_ok_epoch\":$now_epoch}"
+    if [[ "$allowed" == "true" ]]; then
+      write_last_ok
       return 0
     fi
   fi
 
   if [[ "$http_code" == "403" ]]; then
-    status="$(python3 - <<'PY' "$body"
+    status="$(python3 - "$body" <<'PY'
 import json, sys
 try:
     print(json.loads(sys.argv[1]).get("status",""))
@@ -136,51 +176,29 @@ except Exception:
 PY
 )"
     case "$status" in
-      revoked|blocked|invalid_token|unknown_device)
-        echo "AUTH_REMOVE:$status"
-        return 10
-        ;;
       pending)
+        register_if_needed
         echo "Gerät ist registriert, aber noch nicht freigegeben."
-        return 11
+        return 1
+        ;;
+      revoked|blocked|unknown_device|invalid_token)
+        self_remove "$status"
+        return 1
         ;;
       *)
-        echo "Server hat Zugriff verweigert: $status"
-        return 12
+        echo "Zugriff verweigert: $status"
+        return 1
         ;;
     esac
   fi
 
   if (( last_ok_epoch > 0 && now_epoch - last_ok_epoch <= grace_seconds )); then
-    echo "Server aktuell nicht erreichbar, aber noch in Offline-Grace-Zeit."
     return 0
   fi
 
   echo "Server nicht erreichbar und keine gültige Grace-Zeit mehr vorhanden."
-  return 20
+  return 1
 }
 
-self_remove() {
-  local reason="${1:-revoked}"
-  echo "Entferne nur Paket ${TOOL_NAME} wegen Status: ${reason}"
-  sudo apt remove -y "$TOOL_NAME" || true
-}
-
-main() {
-  ensure_device
-  register_if_needed
-  check_access
-  rc=$?
-  case "$rc" in
-    0) exit 0 ;;
-    10)
-      self_remove "revoked"
-      exit 10
-      ;;
-    *)
-      exit "$rc"
-      ;;
-  esac
-}
-
-main "$@"
+ensure_device_file
+check_access
