@@ -8,9 +8,7 @@ pkg_dir="$(find packages -maxdepth 1 -mindepth 1 -type d -name 'hyrovi-tool_*' |
 
 mkdir -p "$pkg_dir/usr/local/lib/hyrovi-auth" "$pkg_dir/etc/default"
 
-if [[ -f "$pkg_dir/usr/bin/hyrovi-tool" ]]; then
-  cp "$pkg_dir/usr/bin/hyrovi-tool" "$pkg_dir/usr/local/lib/hyrovi-auth/REAL_HYROVI_TOOL"
-fi
+cp tools/hyrovi-tool-real.sh "$pkg_dir/usr/local/lib/hyrovi-auth/REAL_HYROVI_TOOL"
 
 cp client-hooks/hyrovi-tool-wrapper-template.sh "$pkg_dir/usr/bin/hyrovi-tool"
 cp tools/hyrovi-auth-guard.sh "$pkg_dir/usr/local/lib/hyrovi-auth/hyrovi-auth-guard.sh"
