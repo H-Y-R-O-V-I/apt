@@ -74,6 +74,19 @@ info "Prüfe Paketintegrität ..."
 sha256_actual="$(sha256sum "$DOWNLOAD_DIR/$package_name" | awk "{print \$1}")"
 [[ "$sha256_actual" == "$sha256_expected" ]] || fail "Integritätsprüfung fehlgeschlagen."
 
+if dpkg -s hyrovi-tool-secure >/dev/null 2>&1; then
+  installed_version="$(dpkg-query -W -f='${Version}' hyrovi-tool-secure 2>/dev/null || true)"
+else
+  installed_version=""
+fi
+
+deb_version="$(dpkg-deb -f "$DOWNLOAD_DIR/$package_name" Version 2>/dev/null || true)"
+
+if [[ -n "$installed_version" && -n "$deb_version" && "$installed_version" == "$deb_version" ]]; then
+  ok "Privates Tool ist bereits aktuell."
+  exit 0
+fi
+
 info "Installiere privates Paket ..."
 sudo DEBIAN_FRONTEND=noninteractive apt install -y "$DOWNLOAD_DIR/$package_name" >/dev/null 2>&1 || fail "Installation fehlgeschlagen."
 

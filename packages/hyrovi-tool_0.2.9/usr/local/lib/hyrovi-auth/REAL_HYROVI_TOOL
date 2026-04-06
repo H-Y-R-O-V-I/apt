@@ -1,0 +1,47 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+info() { echo "[INFO] $1"; }
+ok() { echo "[OK] $1"; }
+fail() { echo "[FEHLER] $1" >&2; exit 1; }
+
+show_help() {
+  cat <<'EOT'
+hyrovi-tool bootstrap
+
+Verwendung:
+  hyrovi-tool help
+  hyrovi-tool version
+  hyrovi-tool update
+  hyrovi-tool secure-install
+
+Commands:
+  help            Zeigt diese Hilfe
+  version         Zeigt die aktuelle Version
+  update          Aktualisiert das Bootstrap-Tool ueber APT
+  secure-install  Lädt nach Auth das private sichere DEB vom Pi und installiert es
+EOT
+}
+
+case "${1:-help}" in
+  help|-h|--help)
+    show_help
+    ;;
+  version|-v|--version)
+    echo "bootstrap"
+    ;;
+  update)
+    info "Suche nach Updates ..."
+    if sudo apt update >/dev/null 2>&1 && sudo apt install --only-upgrade -y hyrovi-tool >/dev/null 2>&1; then
+      ok "Bootstrap-Tool wurde aktualisiert."
+    else
+      fail "Update des Bootstrap-Tools fehlgeschlagen."
+    fi
+    ;;
+  secure-install)
+    exec /usr/local/lib/hyrovi-auth/install-secure-package.sh
+    ;;
+  *)
+    fail "Unbekannter Befehl: $1"
+    ;;
+esac
