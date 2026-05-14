@@ -1,15 +1,15 @@
 Package: hyrovi-tool
-Version: 0.2.9
+Version: 0.3.0
 Architecture: all
 Maintainer: Leo <leonar.schmidt2012@gmail.com>
-Depends: bash, apt
+Depends: bash, apt, curl, python3
 Priority: optional
 Section: utils
-Filename: pool/main/h/hyrovi-tool/hyrovi-tool_0.2.9_all.deb
-Size: 3248
-SHA256: 319a975671eb8680c8fc40a1c6d7ba57aa2fe227c7603e2be4c9cc8b10f49406
-SHA1: 243adb4225462433fdd487b88bf361b2baa9aae2
-MD5sum: 304bd5e82871e046adcad5d16bd3500d
+Filename: pool/main/h/hyrovi-tool/hyrovi-tool_0.3.0_all.deb
+Size: 8904
+SHA256: 0863efad6c3ddc9a5b06848e879d64901b1d2da38c7c8bbab41ecb9bfdaa9d75
+SHA1: 0d0946329ba925a2648ac29d93a95d810e30dfa6
+MD5sum: e87530dcd1b88d6ae397359a7c05ab2c
 Description: Hyrovi CLI Tool
- Ein eigenes CLI-Tool mit Commands und Update-Funktion.
+ Ein eigenes CLI-Tool mit Commands, Update-Funktion und Geräte-Setup.
 

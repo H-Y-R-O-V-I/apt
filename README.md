@@ -19,3 +19,12 @@ echo "deb [signed-by=/etc/apt/keyrings/hyrovi-archive-keyring.gpg] https://H-Y-R
 sudo apt update && \
 sudo apt install hyrovi-tool
 ```
+
+## Verwendung
+
+```bash
+hyrovi-tool help
+hyrovi-tool setup device
+```
+
+`hyrovi-tool setup device` startet ein interaktives Setup für neue Geräte wie VPS, Raspberry Pi, Linux-PC oder Docker-Hosts und bietet dabei u. a. Paketbasis, Python-Stack, Firewall, Fail2ban, Docker, Tailscale, Hostname und Zeitzone an.
